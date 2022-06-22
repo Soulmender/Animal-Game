@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171c3a2bd5618174fb0df2f781af833c, type: 3}
+  m_Name: Cow
+  m_EditorClassIdentifier: 
+  soundEnglish: {fileID: 8300000, guid: fe446ebb208b22f4d94b237b9ca917ba, type: 3}
+  soundFinnish: {fileID: 8300000, guid: a6a5475fb9608014983fae7b835a0796, type: 3}
+  sprite: {fileID: 21300000, guid: 7576b963cfe580d468ba63b2563bc34e, type: 3}
+  spellingEnglish: cow

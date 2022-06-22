@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171c3a2bd5618174fb0df2f781af833c, type: 3}
+  m_Name: Lion
+  m_EditorClassIdentifier: 
+  soundEnglish: {fileID: 8300000, guid: cd6357c7e6ef06347bfacc91dd0a24c1, type: 3}
+  soundFinnish: {fileID: 8300000, guid: adb6e9c7388c29d44a06b7eedf1045c0, type: 3}
+  sprite: {fileID: 21300000, guid: 7a1444a0af8230645964c860d412d319, type: 3}
+  spellingEnglish: lion

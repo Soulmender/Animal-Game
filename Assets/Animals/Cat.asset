@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171c3a2bd5618174fb0df2f781af833c, type: 3}
+  m_Name: Cat
+  m_EditorClassIdentifier: 
+  soundEnglish: {fileID: 8300000, guid: 1a34333caebc45d408a46058a306eea7, type: 3}
+  soundFinnish: {fileID: 8300000, guid: dad62b2ec3936bc428dc9d9bf3c62a96, type: 3}
+  sprite: {fileID: 21300000, guid: e630621b3c8e2a34991c4b0257b0a58e, type: 3}
+  spellingEnglish: cat
