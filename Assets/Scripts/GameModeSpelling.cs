@@ -13,7 +13,6 @@ public class GameModeSpelling : MonoBehaviour
     public Image displayAnimal;
     public TMP_InputField inputField;
 
-
     List<Animal> animals = new List<Animal>();
     int animalIndex = -1;
 
@@ -32,7 +31,7 @@ public class GameModeSpelling : MonoBehaviour
         {
             lm.AddTrophy();
         }
-        animalIndex = animalIndex+1 % animals.Count;
+        animalIndex = (animalIndex+1) % animals.Count;
         inputField.text = "";
         displayAnimal.sprite = animals[animalIndex].GetSprite();
     }
@@ -42,8 +41,8 @@ public class GameModeSpelling : MonoBehaviour
         if (CheckSpelling())
         {
             lm.AddCheckmark(animalIndex);
-            SetupNextAnimal();
             AddPoints();
+            SetupNextAnimal();
         }
         else
         {
