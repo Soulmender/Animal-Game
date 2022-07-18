@@ -96,7 +96,7 @@ public class GameModeFind : MonoBehaviour
         shuffledAnimals.Shuffle();
 
         List<Animal> shortList = new List<Animal>();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < shuffledAnimals.Count; i++)
         {
             shortList.Add(shuffledAnimals[i]);
         }
