@@ -25,6 +25,7 @@ public class GameModeListening : MonoBehaviour
         audioSource = GameObject.Find("Level Manager").GetComponent<AudioSource>();
         animals = new List<Animal>(lm.animals);
 
+        animals.Shuffle();
 
     }
 
