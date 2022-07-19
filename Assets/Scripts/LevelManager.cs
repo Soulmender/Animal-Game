@@ -54,9 +54,12 @@ public class LevelManager : MonoBehaviour
         if(noTrophies >= gameModes.Count)
         {
             Debug.LogError("Too many trophies for this level. Or too few Game modes");
+            CompleteLevel();
         }
-
-        gameModes[noTrophies].SetActive(true);
+        else
+        {
+            gameModes[noTrophies].SetActive(true);
+        }
     }
 
     public void UpdateUI()
@@ -113,13 +116,17 @@ public class LevelManager : MonoBehaviour
         gameModes[noTrophies].SetActive(false);
 
         noTrophies++;
-        if(noTrophies > trophies.Count)
+        if(noTrophies >= trophies.Count)
         {
             noTrophies = trophies.Count;
             Debug.Log("You won this level!");
+            CompleteLevel();
         }
 
-        StartANewGameMode();
+        if(noTrophies < trophies.Count)
+        {
+            StartANewGameMode();
+        }
         
         UpdateUI();
     }
@@ -134,5 +141,22 @@ public class LevelManager : MonoBehaviour
         {
             Debug.LogWarning("Score wasn't a number!");
         }
+    }
+
+
+    private void CompleteLevel()
+    {
+        //Pass on new total points to the level manager, update the trophy count]
+        int points;
+        if (Int32.TryParse(scoreText.text, out points))
+        {
+            scoreText.text = (points).ToString();
+        }
+        else
+        {
+            Debug.LogWarning("Score wasn't a number!");
+        }
+
+        GameManager.Instance.UpdateLevelInfo(LevelIndex, noTrophies, points);
     }
 }

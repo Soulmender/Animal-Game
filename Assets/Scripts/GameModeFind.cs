@@ -20,6 +20,7 @@ public class GameModeFind : MonoBehaviour
         lm = GameObject.Find("Level Manager").GetComponent<LevelManager>();
         audioSource = GameObject.Find("Level Manager").GetComponent<AudioSource>();
         animals = new List<Animal>(lm.animals);
+        animals.Shuffle();
 
         SetBoard();
     }
@@ -96,7 +97,7 @@ public class GameModeFind : MonoBehaviour
         shuffledAnimals.Shuffle();
 
         List<Animal> shortList = new List<Animal>();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < shuffledAnimals.Count; i++)
         {
             shortList.Add(shuffledAnimals[i]);
         }

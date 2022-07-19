@@ -60,7 +60,32 @@ public class GameManager : MonoBehaviour
         trophiesAtLevel[lvl - 1] = trophies;
     }
 
-    // Start is called before the first frame update
+    public void UpdateLevelInfo(int lvl, int trophies, int score)
+    {
+        //Update trophies
+        if(trophiesAtLevel[lvl-1] > trophies)
+        {
+            Debug.LogWarning("Trying to save lower trophies value than existing.");
+            return;
+        }
+        else
+        {
+            trophiesAtLevel[lvl - 1] = trophies;
+        }
+        //Update score
+        if(playerScore > score)
+        {
+            Debug.LogWarning("Trying to save lower score value than existing.");
+            return;
+        }
+        else
+        {
+            playerScore = score;
+        }
+
+        GoToMainMenu();
+
+    }
   
 
     public void OnQuitPressed()
