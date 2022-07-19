@@ -43,7 +43,7 @@ public class GameMenuUI : MonoBehaviour
         UpdateUI();
     }
 
-    void UpdateUI()
+    public void UpdateUI()
     {
         PlayerNameDisplay.text = GameManager.Instance.PlayerName;
         PlayerScoreDisplay.text = GameManager.Instance.PlayerScore.ToString();
