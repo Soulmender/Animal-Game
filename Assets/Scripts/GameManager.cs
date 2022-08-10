@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
     int numberOfLevels = 3;
     [SerializeField]
     List<PlayerData> allPlayers;
+
+    string SAVE_PATH;
     
 
 
@@ -38,6 +41,8 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         DontDestroyOnLoad(this);
+
+        SAVE_PATH = Path.Combine(Application.persistentDataPath, "save.json");
     }
 
     private void Start()
@@ -111,28 +116,25 @@ public class GameManager : MonoBehaviour
 
     public void OnLoadPressed()
     {
-        //For TESTING only
-        List<PlayerData> players = new List<PlayerData>();
-        for (int i = 0; i < 5; i++)
-        {
-            PlayerData p = new PlayerData("Player " + i.ToString(), i * 250, player.trophiesAtLevel);
-            p.ToJson();
-            players.Add(p);
-        }
-
-        PlayerCollection pc = new PlayerCollection(players.ToArray());
-        string playersJSON = JsonUtility.ToJson(pc, true);
 
         //Actual LOAD functionality
         //TODO: Read from disc
+        if (!IsFileValid(SAVE_PATH, ".json"))
+        {
+            Debug.LogWarning(string.Format("File {0} does not exist or doesn't have a valid extension.", SAVE_PATH));
+        }
+        else
+        {
+            //From JSON to object
+            string playersJSON = GetFileContents(SAVE_PATH);
 
+            PlayerCollection pcFromJson = JsonUtility.FromJson<PlayerCollection>(playersJSON);
+            allPlayers = new List<PlayerData>(pcFromJson.players);
 
-        //From JSON to object
-        PlayerCollection pcFromJson = JsonUtility.FromJson<PlayerCollection>(playersJSON);
-        allPlayers = new List<PlayerData>(pcFromJson.players);
-
-        FindObjectOfType<GameMenuUI>().UpdateUI();
+            FindObjectOfType<GameMenuUI>().UpdateUI();
+        }
     }
+
 
     public void OnSavePressed()
     {
@@ -152,8 +154,10 @@ public class GameManager : MonoBehaviour
         Debug.Log(playersJSON);
 
         //TODO: Saving to Disc
-
-
+        //Open or create the file.
+        StreamWriter writer = new StreamWriter(SAVE_PATH, false);
+        writer.Write(playersJSON);
+        writer.Close();
     }
   
 
@@ -165,6 +169,35 @@ public class GameManager : MonoBehaviour
     public void PlayScene(int index)
     {
         SceneManager.LoadScene("Level" + index.ToString());
+    }
+
+
+    bool IsFileValid(string path, string extension)
+    {
+        bool IsValid = true;
+
+        if (!File.Exists(path))
+        {
+            IsValid = false;
+        }
+        else if (Path.GetExtension(path).ToLower() != extension)
+        {
+            IsValid = false;
+        }
+
+        return IsValid;
+    }
+
+    string GetFileContents(string path)
+    {
+        string fileContent = string.Empty;
+
+        using (StreamReader reader = new StreamReader(path))
+        {
+            fileContent = reader.ReadToEnd();
+        }
+
+        return fileContent;
     }
 }
 
