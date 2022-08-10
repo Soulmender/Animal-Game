@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     PlayerData player;
     [SerializeField]
     int numberOfLevels = 3;
+    [SerializeField]
+    List<PlayerData> allPlayers;
     
 
 
@@ -41,6 +43,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player = new PlayerData();
+
+        OnSavePressed();
+
+        OnLoadPressed();
     }
 
 
@@ -105,14 +111,49 @@ public class GameManager : MonoBehaviour
 
     public void OnLoadPressed()
     {
-        string testData = "{ \"playerName\": \"Player ABC\", \"playerScore\": 123, \"trophiesAtLevel\": [3,2,1]}"; 
-        player = PlayerData.FromJson(testData);
+        //For TESTING only
+        List<PlayerData> players = new List<PlayerData>();
+        for (int i = 0; i < 5; i++)
+        {
+            PlayerData p = new PlayerData("Player " + i.ToString(), i * 250, player.trophiesAtLevel);
+            p.ToJson();
+            players.Add(p);
+        }
+
+        PlayerCollection pc = new PlayerCollection(players.ToArray());
+        string playersJSON = JsonUtility.ToJson(pc, true);
+
+        //Actual LOAD functionality
+        //TODO: Read from disc
+
+
+        //From JSON to object
+        PlayerCollection pcFromJson = JsonUtility.FromJson<PlayerCollection>(playersJSON);
+        allPlayers = new List<PlayerData>(pcFromJson.players);
+
         FindObjectOfType<GameMenuUI>().UpdateUI();
     }
 
     public void OnSavePressed()
     {
-        player.ToJson();
+        //For TESTING ONLY
+        List<PlayerData> players = new List<PlayerData>();
+        for (int i = 0; i < 5; i++)
+        {
+            PlayerData p = new PlayerData("Player " + i.ToString(), i * 250, player.trophiesAtLevel);
+            p.ToJson();
+            players.Add(p);
+        }
+
+        //Actual SAVE unctionality
+        //Converting to JSON
+        PlayerCollection pc = new PlayerCollection(players.ToArray());
+        string playersJSON = JsonUtility.ToJson(pc, true);
+        Debug.Log(playersJSON);
+
+        //TODO: Saving to Disc
+
+
     }
   
 
@@ -174,5 +215,21 @@ public class PlayerData
             Debug.LogError("Error loading PLayerData from JSON: " + jsonData);
             return null;
         }
+    }
+}
+
+[Serializable]
+public class PlayerCollection
+{
+    public PlayerData[] players;
+
+    public PlayerCollection()
+    {
+        players = new PlayerData[0];
+    }
+
+    public PlayerCollection(PlayerData[] _players)
+    {
+        players = _players;
     }
 }
