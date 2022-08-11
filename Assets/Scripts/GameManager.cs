@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField]
-    PlayerData player;
+    //[SerializeField]
+    //PlayerData player;
     [SerializeField]
     int numberOfLevels = 3;
     [SerializeField]
@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     string SAVE_PATH;
     
-
+    public PlayerData player { get { return allPlayers.GetActivePlayer(); } }
     public string PlayerName { get { return player.playerName; } set { SetActivePlayer(value); } }
     public int PlayerScore { get { return player.playerScore; } set { player.playerScore = value; } }
     public int NumberOfLevels { get { return numberOfLevels; } private set { numberOfLevels = value; } }
@@ -39,8 +39,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        player = new PlayerData();
-
+        OnLoadPressed();
     }
 
 
@@ -126,19 +125,9 @@ public class GameManager : MonoBehaviour
 
     public void OnSavePressed()
     {
-        //For TESTING ONLY
-        List<PlayerData> players = new List<PlayerData>();
-        for (int i = 0; i < 5; i++)
-        {
-            PlayerData p = new PlayerData("Player " + i.ToString(), i * 250, player.trophiesAtLevel);
-            p.ToJson();
-            players.Add(p);
-        }
-
         //Actual SAVE unctionality
         //Converting to JSON
-        PlayerCollection pc = new PlayerCollection(players,0);
-        string playersJSON = JsonUtility.ToJson(pc, true);
+        string playersJSON = JsonUtility.ToJson(allPlayers, true);
 
         //TODO: Saving to Disc
         //Open or create the file.
@@ -195,7 +184,7 @@ public class GameManager : MonoBehaviour
         {
             if(allPlayers.players[i].playerName == name)
             {
-                
+                return;
             }
         }
 
@@ -203,10 +192,12 @@ public class GameManager : MonoBehaviour
         PlayerData newPlayer = new PlayerData();
         newPlayer.playerName = name;
         allPlayers.players.Add(newPlayer);
-        
+        allPlayers.activePlayer = allPlayers.players.Count - 1;
 
         //Save the game after creating a new player
         OnSavePressed();
+
+        FindObjectOfType<GameMenuUI>().UpdateUI();
     }
 }
 
@@ -274,5 +265,10 @@ public class PlayerCollection
     {
         players = new List<PlayerData>(_players);
         activePlayer = _activePlayer;
+    }
+
+    public PlayerData GetActivePlayer()
+    {
+        return players[activePlayer];
     }
 }
