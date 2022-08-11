@@ -14,14 +14,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     int numberOfLevels = 3;
     [SerializeField]
-    List<PlayerData> allPlayers;
+    PlayerCollection allPlayers;
 
     string SAVE_PATH;
     
 
-
-
-    public string PlayerName { get { return player.playerName; } set { player.playerName = value; } }
+    public string PlayerName { get { return player.playerName; } set { SetActivePlayer(value); } }
     public int PlayerScore { get { return player.playerScore; } set { player.playerScore = value; } }
     public int NumberOfLevels { get { return numberOfLevels; } private set { numberOfLevels = value; } }
 
@@ -119,8 +117,7 @@ public class GameManager : MonoBehaviour
             //From JSON to object
             string playersJSON = GetFileContents(SAVE_PATH);
 
-            PlayerCollection pcFromJson = JsonUtility.FromJson<PlayerCollection>(playersJSON);
-            allPlayers = new List<PlayerData>(pcFromJson.players);
+            allPlayers = JsonUtility.FromJson<PlayerCollection>(playersJSON);
 
             FindObjectOfType<GameMenuUI>().UpdateUI();
         }
@@ -140,7 +137,7 @@ public class GameManager : MonoBehaviour
 
         //Actual SAVE unctionality
         //Converting to JSON
-        PlayerCollection pc = new PlayerCollection(players.ToArray(),0);
+        PlayerCollection pc = new PlayerCollection(players,0);
         string playersJSON = JsonUtility.ToJson(pc, true);
 
         //TODO: Saving to Disc
@@ -188,6 +185,28 @@ public class GameManager : MonoBehaviour
         }
 
         return fileContent;
+    }
+
+    void SetActivePlayer(string name)
+    {
+        //Find if the player exists in the old list
+        //There are more clever ways of doing this, such as using Linq, but tha t requires a far more indepth knowledge than is necessary for this
+        for (int i = 0; i < allPlayers.players.Count; i++)
+        {
+            if(allPlayers.players[i].playerName == name)
+            {
+                
+            }
+        }
+
+        //If we haven't found a player with matching name, create a new player and add to list and make it active;
+        PlayerData newPlayer = new PlayerData();
+        newPlayer.playerName = name;
+        allPlayers.players.Add(newPlayer);
+        
+
+        //Save the game after creating a new player
+        OnSavePressed();
     }
 }
 
@@ -243,17 +262,17 @@ public class PlayerData
 [Serializable]
 public class PlayerCollection
 {
-    public PlayerData[] players;
+    public List<PlayerData> players;
     public int activePlayer;
 
     public PlayerCollection()
     {
-        players = new PlayerData[0];
+        players = new List<PlayerData>();
     }
 
-    public PlayerCollection(PlayerData[] _players, int _activePlayer)
+    public PlayerCollection(List<PlayerData> _players, int _activePlayer)
     {
-        players = _players;
+        players = new List<PlayerData>(_players);
         activePlayer = _activePlayer;
     }
 }
