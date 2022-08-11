@@ -8,13 +8,7 @@ using System.IO;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    /*
-    [SerializeField]
-    string playerName;
-    [SerializeField]
-    int playerScore;
-    [SerializeField]
-    List<int> trophiesAtLevel;*/
+
     [SerializeField]
     PlayerData player;
     [SerializeField]
@@ -49,9 +43,6 @@ public class GameManager : MonoBehaviour
     {
         player = new PlayerData();
 
-        OnSavePressed();
-
-        OnLoadPressed();
     }
 
 
@@ -149,9 +140,8 @@ public class GameManager : MonoBehaviour
 
         //Actual SAVE unctionality
         //Converting to JSON
-        PlayerCollection pc = new PlayerCollection(players.ToArray());
+        PlayerCollection pc = new PlayerCollection(players.ToArray(),0);
         string playersJSON = JsonUtility.ToJson(pc, true);
-        Debug.Log(playersJSON);
 
         //TODO: Saving to Disc
         //Open or create the file.
@@ -227,7 +217,6 @@ public class PlayerData
         try
         {
             string jsonData = JsonUtility.ToJson(this, true);
-            Debug.Log(jsonData);
             return jsonData;
         }
         catch
@@ -255,14 +244,16 @@ public class PlayerData
 public class PlayerCollection
 {
     public PlayerData[] players;
+    public int activePlayer;
 
     public PlayerCollection()
     {
         players = new PlayerData[0];
     }
 
-    public PlayerCollection(PlayerData[] _players)
+    public PlayerCollection(PlayerData[] _players, int _activePlayer)
     {
         players = _players;
+        activePlayer = _activePlayer;
     }
 }
