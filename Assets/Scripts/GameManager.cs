@@ -184,6 +184,8 @@ public class GameManager : MonoBehaviour
         {
             if(allPlayers.players[i].playerName == name)
             {
+                allPlayers.activePlayer = i;
+                FindObjectOfType<GameMenuUI>().UpdateUI();
                 return;
             }
         }
