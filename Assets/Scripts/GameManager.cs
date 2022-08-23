@@ -9,8 +9,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    //[SerializeField]
-    //PlayerData player;
     [SerializeField]
     int numberOfLevels = 3;
     [SerializeField]
@@ -18,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     string SAVE_PATH;
     
+    public PlayerCollection AllPlayers { get { return allPlayers; } }
     public PlayerData player { get { return allPlayers.GetActivePlayer(); } }
     public string PlayerName { get { return player.playerName; } set { SetActivePlayer(value); } }
     public int PlayerScore { get { return player.playerScore; } set { player.playerScore = value; } }
