@@ -4,7 +4,7 @@
 [Bb]uild/
 [Bb]uilds/
 Assets/AssetStoreTools*
-Logs*
+
 
 # Visual Studio cache directory
 .vs/
@@ -36,4 +36,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-Logs/AssetImportWorker0.log
+
+#Unity Logs
+*.log
+[Ll]ogs/

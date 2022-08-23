@@ -119,7 +119,6 @@ public class LevelManager : MonoBehaviour
         if(noTrophies >= trophies.Count)
         {
             noTrophies = trophies.Count;
-            Debug.Log("You won this level!");
             CompleteLevel();
         }
 
