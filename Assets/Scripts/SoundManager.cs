@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SoundManager : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class SoundManager : MonoBehaviour
     Slider masterVolumeSlider;
     [SerializeField]
     Slider speachVolumeSlider;
+    [SerializeField]
+    Toggle fulscreenToggle;
+    [SerializeField]
+    TMP_Dropdown resolutionsDropdown;
     [SerializeField]
     float masterVolume;
     [SerializeField]
@@ -18,9 +23,54 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     float tempSpeachVolume;
 
+    
+
+    Resolution[] availableResolutions;
+
     private void Awake()
     {
         Load();
+        availableResolutions = Screen.resolutions;
+        SetResolutionOptions();
+
+    }
+
+    void SetResolutionOptions()
+    {
+        resolutionsDropdown.ClearOptions();
+        int currentResolution = 0;
+
+        List<string> options = new List<string>();
+        for (int i = 0; i < availableResolutions.Length; i++)
+        {
+            string option = availableResolutions[i].width + "x" + availableResolutions[i].height;
+            options.Add(option);
+
+            if(availableResolutions[i].width == Screen.currentResolution.width && availableResolutions[i].height == Screen.currentResolution.height)
+            {
+                currentResolution = i;
+            }
+        }
+
+        resolutionsDropdown.AddOptions(options);
+        resolutionsDropdown.value = currentResolution;
+        resolutionsDropdown.RefreshShownValue();
+    }
+
+    public void OnResolutionValueChange(int resolutionIndex)
+    {
+        Resolution resolution = availableResolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
+    public void SetFullScreen(bool fullscreen)
+    {
+        Screen.fullScreen= fullscreen;
+    }
+
+    public void SetGraphicsQuality (int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
     }
 
     public void OnMasterVolumeSliderValueChange()
