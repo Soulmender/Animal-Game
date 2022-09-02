@@ -24,10 +24,12 @@ public class GameMenuUI : MonoBehaviour
 
 
     List<GameObject> PlayerItems;
+    List<GameObject> levelItems;
 
     private void Awake()
     {
         PlayerItems = new List<GameObject>();
+        levelItems = new List<GameObject>();
     }
 
 
@@ -65,13 +67,28 @@ public class GameMenuUI : MonoBehaviour
         PlayerItems.Clear();
     }
 
+    public void UpdateLevelItems()
+    {
+        DestroyLevelItems();
+        GenerateLevelItems();
+    }
+
+    private void DestroyLevelItems()
+    {
+        for (int i = levelItems.Count - 1; i >= 0; i--)
+        {
+            Destroy(levelItems[i]);
+        }
+        levelItems.Clear();
+    }
+
     private void GenerateLevelItems()
     {
         for (int i = 0; i < GameManager.Instance.NumberOfLevels; i++)
         {
             GameObject lvlSelectItem = Instantiate(LvlSelectItemPrefab, LevelContainer.transform);
             lvlSelectItem.GetComponent<LevelSelectItemUI>().SetupLevelItem(i + 1, GameManager.Instance.GetTrophiesAtLevel(i+1));
-
+            levelItems.Add(lvlSelectItem);
         }
     }
 
@@ -91,5 +108,6 @@ public class GameMenuUI : MonoBehaviour
     {
         PlayerNameDisplay.text = GameManager.Instance.PlayerName;
         PlayerScoreDisplay.text = GameManager.Instance.PlayerScore.ToString();
+        UpdateLevelItems();
     }
 }
