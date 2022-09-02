@@ -25,6 +25,8 @@ public class LevelManager : MonoBehaviour
 
     public List<Animal> animals = new List<Animal>();
     GameManager gm;
+
+    AudioSource audioPlayer;
     
 
     private void Awake()
@@ -32,6 +34,8 @@ public class LevelManager : MonoBehaviour
         GetPlayerInfo();
         UpdateUI();
         StartANewGameMode();
+        audioPlayer = GetComponent<AudioSource>();
+        audioPlayer.volume = PlayerPrefs.GetFloat("speachVolume");
     }
 
     private void GetPlayerInfo()
