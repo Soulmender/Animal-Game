@@ -1969,17 +1969,17 @@ MonoBehaviour:
   m_FillRect: {fileID: 216806918}
   m_HandleRect: {fileID: 994970112}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
-  m_Value: 1
+  m_MinValue: -80
+  m_MaxValue: 20
+  m_WholeNumbers: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2016974771}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
         m_MethodName: OnMasterVolumeSliderValueChange
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3743,10 +3743,7 @@ MonoBehaviour:
   speachVolumeSlider: {fileID: 0}
   fulscreenToggle: {fileID: 0}
   resolutionsDropdown: {fileID: 0}
-  masterVolume: 0
-  tempMasterVolume: 0
-  speachVolume: 0
-  tempSpeachVolume: 0
+  mainMixer: {fileID: 24100000, guid: 9a4f18727eb389a49834624b3fae916a, type: 2}
 --- !u!1 &994970111
 GameObject:
   m_ObjectHideFlags: 0
@@ -8057,17 +8054,17 @@ MonoBehaviour:
   m_FillRect: {fileID: 1263710004}
   m_HandleRect: {fileID: 561066652}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2016974771}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
         m_MethodName: OnSpeachVolumeSliderValueChange
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8426,10 +8423,7 @@ MonoBehaviour:
   speachVolumeSlider: {fileID: 1918561910}
   fulscreenToggle: {fileID: 822907289}
   resolutionsDropdown: {fileID: 1269197088}
-  masterVolume: 0
-  tempMasterVolume: 0
-  speachVolume: 0
-  tempSpeachVolume: 0
+  mainMixer: {fileID: 24100000, guid: 9a4f18727eb389a49834624b3fae916a, type: 2}
 --- !u!1 &2022603664
 GameObject:
   m_ObjectHideFlags: 0

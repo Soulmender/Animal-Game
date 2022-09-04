@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
@@ -14,14 +15,16 @@ public class SoundManager : MonoBehaviour
     Toggle fulscreenToggle;
     [SerializeField]
     TMP_Dropdown resolutionsDropdown;
+    //[SerializeField]
+    //float masterVolume;
+    //[SerializeField]
+    //float tempMasterVolume;
+    //[SerializeField]
+    //float speachVolume;
+    //[SerializeField]
+    //float tempSpeachVolume;
     [SerializeField]
-    float masterVolume;
-    [SerializeField]
-    float tempMasterVolume;
-    [SerializeField]
-    float speachVolume;
-    [SerializeField]
-    float tempSpeachVolume;
+    AudioMixer mainMixer;
 
     
 
@@ -71,37 +74,42 @@ public class SoundManager : MonoBehaviour
     public void SetGraphicsQuality (int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
+        PlayerPrefs.SetInt("graphicsQuality", qualityIndex);
     }
 
-    public void OnMasterVolumeSliderValueChange()
+    public void OnMasterVolumeSliderValueChange(float sliderValue)
     {
-        tempMasterVolume = masterVolumeSlider.value;        
+        //tempMasterVolume = masterVolumeSlider.value;
+        mainMixer.SetFloat("MasterVolume", sliderValue);
     }
 
-    public void OnSpeachVolumeSliderValueChange()
+    public void OnSpeachVolumeSliderValueChange(float sliderValue)
     {
-        tempSpeachVolume = speachVolumeSlider.value;
+        //tempSpeachVolume = speachVolumeSlider.value;
+        mainMixer.SetFloat("SpeachVolume", sliderValue);
     }
 
     public void Save()
     {
-        masterVolume = tempMasterVolume;
-        PlayerPrefs.SetFloat("masterVolume", tempMasterVolume);
-        AudioListener.volume = masterVolume;
+        //masterVolume = tempMasterVolume;
+        PlayerPrefs.SetFloat("masterVolume", masterVolumeSlider.value);
+        //AudioListener.volume = masterVolume;
 
-        speachVolume = tempSpeachVolume;
-        PlayerPrefs.SetFloat("speachVolume", speachVolume);
+        //speachVolume = tempSpeachVolume;
+        PlayerPrefs.SetFloat("speachVolume", speachVolumeSlider.value);
     }
 
     private void Load()
     {
-        masterVolume = PlayerPrefs.GetFloat("masterVolume");
-        tempMasterVolume = masterVolume;
+        float masterVolume = PlayerPrefs.GetFloat("masterVolume");
+        //tempMasterVolume = masterVolume;
         masterVolumeSlider.value = masterVolume;
+        mainMixer.SetFloat("MasterVolume", masterVolume);
 
-        speachVolume = PlayerPrefs.GetFloat("speachVolume");
-        tempSpeachVolume = speachVolume;
+        float speachVolume = PlayerPrefs.GetFloat("speachVolume");
+        //tempSpeachVolume = speachVolume;
         speachVolumeSlider.value = speachVolume;
+        mainMixer.SetFloat("SpeachVolume", speachVolume);
     }
 
 
